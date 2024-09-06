@@ -7,6 +7,7 @@ import UserList from "./components/UserList.jsx";
 import CreateUser from "./components/CreateUser.jsx";
 import Layout from "./components/Layout.jsx";
 import UpdateUser from "./components/UpdateUser.jsx";
+import UserDetails from "./components/UserDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "update/:userId",
         element: <UpdateUser />,
+      },
+      {
+        path: "/users/:id",
+        element: <UserDetails />,
       },
     ],
   },
