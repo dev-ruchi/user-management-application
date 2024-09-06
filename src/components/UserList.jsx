@@ -9,6 +9,7 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
+  // fetch users from api
   const fetchUsers = () => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {

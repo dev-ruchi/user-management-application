@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 import UserList from "./components/UserList.jsx";
+import CreateUser from "./components/CreateUser.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
         path: "/users",
         element: <UserList />,
       },
+      {
+        path: "/create",
+        element: <CreateUser />
+      }
     ],
   },
 ]);
