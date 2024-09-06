@@ -5,20 +5,26 @@ import App from "./App.jsx";
 import "./index.css";
 import UserList from "./components/UserList.jsx";
 import CreateUser from "./components/CreateUser.jsx";
+import Layout from "./components/Layout.jsx";
+import UpdateUser from "./components/UpdateUser.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Layout />,
     children: [
       {
-        path: "/users",
+        path: "/",
         element: <UserList />,
       },
       {
         path: "/create",
-        element: <CreateUser />
-      }
+        element: <CreateUser />,
+      },
+      {
+        path: "update/:userId",
+        element: <UpdateUser />,
+      },
     ],
   },
 ]);
