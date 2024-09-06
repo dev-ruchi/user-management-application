@@ -1,13 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import UpdateUser from "./UpdateUser";
+import DeleteUser from "./DeleteUser";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [updateUserIndex, setupdateUserIndex] = useState(-1);
-  const navigate = useNavigate();
+  const [deleteUserId, setDeleteUserId] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -32,9 +32,9 @@ const UserList = () => {
       });
   };
 
-  const handleUpdate = (userId) => {
-    console.log("Updating user with id:", userId);
-    navigate(`/update${userId}`);
+  const handleDelete = (userId) => {
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    setDeleteUserId(null); // Close the delete confirmation dialog
   };
 
   return (
@@ -51,6 +51,7 @@ const UserList = () => {
               <th className="py-3 px-6 text-left">Username</th>
               <th className="py-3 px-6 text-left">Address</th>
               <th className="py-3 px-6 text-left">Update User</th>
+              <th className="py-3 px-6 text-left">Delete User</th>
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
@@ -74,6 +75,14 @@ const UserList = () => {
                     Edit
                   </button>
                 </td>
+                <td className="py-3 px-6 text-left">
+                  <button
+                    onClick={() => setDeleteUserId(user.id)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -84,6 +93,14 @@ const UserList = () => {
             setUsers={setUsers}
             updateUserIndex={updateUserIndex}
             setupdateUserIndex={setupdateUserIndex}
+          />
+        )}
+
+        {deleteUserId !== null && (
+          <DeleteUser
+            userId={deleteUserId}
+            onDelete={handleDelete}
+            onClose={() => setDeleteUserId(null)}
           />
         )}
       </div>
