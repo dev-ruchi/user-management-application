@@ -76,7 +76,7 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                 <Form noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-gray-700">Name</label>
+                      <label className="block mb-1 text-gray-700">Name</label>
                       <Field
                         type="text"
                         name="name"
@@ -90,7 +90,7 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700">Email</label>
+                      <label className="block mb-1 text-gray-700">Email</label>
                       <Field
                         type="email"
                         name="email"
@@ -104,7 +104,7 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700">Phone</label>
+                      <label className="block mb-1 text-gray-700">Phone</label>
                       <Field
                         type="text"
                         name="phone"
@@ -118,7 +118,9 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700">Username</label>
+                      <label className="block mb-1 text-gray-700">
+                        Username
+                      </label>
                       <Field
                         type="text"
                         name="username"
@@ -136,7 +138,7 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                       Address
                     </h3>
                     <div>
-                      <label className="block text-gray-700">Street</label>
+                      <label className="block mb-1 text-gray-700">Street</label>
                       <Field
                         type="text"
                         name="address.street"
@@ -150,7 +152,7 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700">Suite</label>
+                      <label className="block mb-1 text-gray-700">Suite</label>
                       <Field
                         type="text"
                         name="address.suite"
@@ -164,7 +166,7 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700">City</label>
+                      <label className="block mb-1 text-gray-700">City</label>
                       <Field
                         type="text"
                         name="address.city"
@@ -178,7 +180,9 @@ const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700">Zipcode</label>
+                      <label className="block mb-1 text-gray-700">
+                        Zipcode
+                      </label>
                       <Field
                         type="text"
                         name="address.zipcode"

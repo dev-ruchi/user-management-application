@@ -2,20 +2,18 @@ import React from "react";
 
 const DeleteUser = ({ userId, onDelete, onClose }) => {
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      fetch(`https://jsonplaceholder.typicode.com/users/${userId}`, {
-        method: "DELETE",
+    fetch(`https://jsonplaceholder.typicode.com/users/${userId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Could not delete the user");
+        }
+        onDelete(userId); // Notify parent to update the list
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Could not delete the user");
-          }
-          onDelete(userId); // Notify parent to update the list
-        })
-        .catch((err) => {
-          console.error("Error deleting user:", err);
-        });
-    }
+      .catch((err) => {
+        console.error("Error deleting user:", err);
+      });
   };
 
   return (
