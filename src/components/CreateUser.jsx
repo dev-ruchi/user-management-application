@@ -1,164 +1,200 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const CreateUser = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [username, setUsername] = useState("");
-  const [address, setAddress] = useState({
-    street: "",
-    suite: "",
-    city: "",
-    zipcode: "",
+  // Yup validation schema
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, "Name must be at least 3 characters")
+      .required("Name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, "Phone must be numeric")
+      .required("Phone is required"),
+    username: Yup.string()
+      .min(4, "Username must be at least 4 characters")
+      .required("Username is required"),
+    address: Yup.object().shape({
+      street: Yup.string().required("Street is required"),
+      suite: Yup.string().required("Suite is required"),
+      city: Yup.string().required("City is required"),
+      zipcode: Yup.string()
+        .matches(/^[0-9]+$/, "Zipcode must be numeric")
+        .required("Zipcode is required"),
+    }),
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (values, { resetForm }) => {
     const payload = {
-      name: name,
-      email: email,
-      phone: phone,
-      username: username,
-      address: {
-        street: address.street,
-        suite: address.suite,
-        city: address.city,
-        zipcode: address.zipcode,
-      },
+      ...values,
     };
-
-    e.preventDefault();
 
     axios
       .post("https://jsonplaceholder.typicode.com/users", payload)
       .then((response) => {
-        console.log("User created:", response.data);
         alert("User created successfully!");
-        setName("");
-        setEmail("");
-        setPhone("");
-        setUsername("");
-        setAddress({
-          street: "",
-          suite: "",
-          city: "",
-          zipcode: "",
-        });
+        resetForm();
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const handleAddressChange = (e) => {
-    const { name, value } = e.target;
-
-    setAddress((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
   return (
     <div className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
       <h2 className="text-2xl font-bold mb-4">Create New User</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Phone</label>
-          <input
-            type="text"
-            name="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <h3 className="text-xl font-semibold mb-2">Address</h3>
-        <div className="mb-4">
-          <label className="block text-gray-700">Street</label>
-          <input
-            type="text"
-            name="street"
-            value={address.street}
-            onChange={handleAddressChange}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Suite</label>
-          <input
-            type="text"
-            name="suite"
-            value={address.suite}
-            onChange={handleAddressChange}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">City</label>
-          <input
-            type="text"
-            name="city"
-            value={address.city}
-            onChange={handleAddressChange}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Zipcode</label>
-          <input
-            type="text"
-            name="zipcode"
-            value={address.zipcode}
-            onChange={handleAddressChange}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-        >
-          Create User
-        </button>
-      </form>
+      <Formik
+        initialValues={{
+          name: "",
+          email: "",
+          phone: "",
+          username: "",
+          address: {
+            street: "",
+            suite: "",
+            city: "",
+            zipcode: "",
+          },
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ handleChange }) => (
+          <Form noValidate>
+            <div className="mb-4">
+              <label className="block text-gray-700">Name</label>
+              <Field
+                type="text"
+                name="name"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700">Email</label>
+              <Field
+                type="email"
+                name="email"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700">Phone</label>
+              <Field
+                type="text"
+                name="phone"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="phone"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700">Username</label>
+              <Field
+                type="text"
+                name="username"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <h3 className="text-xl font-semibold mb-2">Address</h3>
+            <div className="mb-4">
+              <label className="block text-gray-700">Street</label>
+              <Field
+                type="text"
+                name="address.street"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="address.street"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700">Suite</label>
+              <Field
+                type="text"
+                name="address.suite"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="address.suite"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700">City</label>
+              <Field
+                type="text"
+                name="address.city"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="address.city"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700">Zipcode</label>
+              <Field
+                type="text"
+                name="address.zipcode"
+                className="w-full px-3 py-2 border rounded-lg"
+                onChange={handleChange}
+              />
+              <ErrorMessage
+                name="address.zipcode"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            >
+              Create User
+            </button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
