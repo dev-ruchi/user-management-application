@@ -4,8 +4,8 @@ import { X } from "react-feather";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const CreateUser = ({ createUser, setCreateUser }) => {
-  // Yup validation 
+const CreateUser = ({ createUser, setCreateUser, setUsers }) => {
+  // Yup validation
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .min(3, "Name must be at least 3 characters")
@@ -13,9 +13,7 @@ const CreateUser = ({ createUser, setCreateUser }) => {
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
-    phone: Yup.string()
-      .matches(/^[0-9]+$/, "Phone must be numeric")
-      .required("Phone is required"),
+    phone: Yup.string().required("Phone is required"),
     username: Yup.string()
       .min(4, "Username must be at least 4 characters")
       .required("Username is required"),
@@ -23,9 +21,7 @@ const CreateUser = ({ createUser, setCreateUser }) => {
       street: Yup.string().required("Street is required"),
       suite: Yup.string().required("Suite is required"),
       city: Yup.string().required("City is required"),
-      zipcode: Yup.string()
-        .matches(/^[0-9]+$/, "Zipcode must be numeric")
-        .required("Zipcode is required"),
+      zipcode: Yup.string().required("Zipcode is required"),
     }),
   });
 
@@ -38,7 +34,9 @@ const CreateUser = ({ createUser, setCreateUser }) => {
       .post("https://jsonplaceholder.typicode.com/users", payload)
       .then((response) => {
         alert("User created successfully!");
+        setUsers((prevUsers) => [...prevUsers, response.data]);
         resetForm();
+        handleClose();
       })
       .catch((error) => {
         console.log(error);

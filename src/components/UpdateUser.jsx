@@ -4,14 +4,21 @@ import { X } from "react-feather";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) => {
+const UpdateUser = ({
+  users,
+  updateUserIndex,
+  setupdateUserIndex,
+  setUsers,
+}) => {
   const user = users[updateUserIndex];
   const [loading, setLoading] = useState(false); // Loading state
 
-  // Yup validation 
+  // Yup validation
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
     phone: Yup.string().required("Phone number is required"),
     username: Yup.string().required("Username is required"),
     address: Yup.object({
@@ -78,7 +85,9 @@ const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) =>
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={`block border p-2 rounded w-full ${
-                formik.touched.name && formik.errors.name ? "border-red-500" : ""
+                formik.touched.name && formik.errors.name
+                  ? "border-red-500"
+                  : ""
               }`}
               placeholder="Name"
             />
@@ -97,7 +106,9 @@ const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) =>
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={`border p-2 rounded w-full ${
-                formik.touched.email && formik.errors.email ? "border-red-500" : ""
+                formik.touched.email && formik.errors.email
+                  ? "border-red-500"
+                  : ""
               }`}
               placeholder="Email"
             />
@@ -116,7 +127,9 @@ const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) =>
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={`border p-2 rounded w-full ${
-                formik.touched.phone && formik.errors.phone ? "border-red-500" : ""
+                formik.touched.phone && formik.errors.phone
+                  ? "border-red-500"
+                  : ""
               }`}
               placeholder="Phone"
             />
@@ -135,12 +148,16 @@ const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) =>
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={`border p-2 rounded w-full ${
-                formik.touched.username && formik.errors.username ? "border-red-500" : ""
+                formik.touched.username && formik.errors.username
+                  ? "border-red-500"
+                  : ""
               }`}
               placeholder="Username"
             />
             {formik.touched.username && formik.errors.username && (
-              <div className="text-red-500 text-sm">{formik.errors.username}</div>
+              <div className="text-red-500 text-sm">
+                {formik.errors.username}
+              </div>
             )}
           </div>
           <div>
@@ -160,9 +177,12 @@ const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) =>
               }`}
               placeholder="Street"
             />
-            {formik.touched.address?.street && formik.errors.address?.street && (
-              <div className="text-red-500 text-sm">{formik.errors.address.street}</div>
-            )}
+            {formik.touched.address?.street &&
+              formik.errors.address?.street && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.address.street}
+                </div>
+              )}
           </div>
           <div>
             <label className="block mb-1" htmlFor="city">
@@ -182,7 +202,9 @@ const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) =>
               placeholder="City"
             />
             {formik.touched.address?.city && formik.errors.address?.city && (
-              <div className="text-red-500 text-sm">{formik.errors.address.city}</div>
+              <div className="text-red-500 text-sm">
+                {formik.errors.address.city}
+              </div>
             )}
           </div>
           <div>
@@ -196,15 +218,19 @@ const UpdateUser = ({ users, updateUserIndex, setupdateUserIndex, setUsers }) =>
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className={`border p-2 rounded w-full ${
-                formik.touched.address?.zipcode && formik.errors.address?.zipcode
+                formik.touched.address?.zipcode &&
+                formik.errors.address?.zipcode
                   ? "border-red-500"
                   : ""
               }`}
               placeholder="Zipcode"
             />
-            {formik.touched.address?.zipcode && formik.errors.address?.zipcode && (
-              <div className="text-red-500 text-sm">{formik.errors.address.zipcode}</div>
-            )}
+            {formik.touched.address?.zipcode &&
+              formik.errors.address?.zipcode && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.address.zipcode}
+                </div>
+              )}
           </div>
         </div>
 
