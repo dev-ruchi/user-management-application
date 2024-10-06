@@ -237,7 +237,7 @@ const UpdateUser = ({
         {/* Conditional rendering for button or spinner */}
         <button
           type="submit"
-          className={`bg-green-500 text-white px-4 py-2 rounded mt-4 ${
+          className={`bg-blue-500 text-white px-4 py-2 rounded mt-4 ${
             loading ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={loading}
