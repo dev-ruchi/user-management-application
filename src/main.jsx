@@ -19,10 +19,6 @@ const router = createBrowserRouter([
         element: <UserList />,
       },
       {
-        path: "/create",
-        element: <CreateUser />,
-      },
-      {
         path: "update/:userId",
         element: <UpdateUser />,
       },
