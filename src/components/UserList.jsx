@@ -66,6 +66,33 @@ const UserList = () => {
         </button>
       </div>
 
+      <div className="relative h-screen flex items-center justify-center overflow-hidden mb-4">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://img.freepik.com/free-vector/stylish-glowing-digital-red-lines-banner_1017-23964.jpg" 
+            alt="Hero Background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+            Welcome to Our Platform
+          </h1>
+          <p className="text-xl sm:text-2xl text-white mb-8 max-w-3xl mx-auto">
+            We provide innovative solutions for your business needs with our cutting-edge technology.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#services" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium text-lg transition-colors">
+              Our Services
+            </a>
+            <a href="#contact" className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-medium text-lg hover:bg-white hover:text-blue-600 transition-colors">
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="mb-4">
         <input
           type="text"
@@ -75,6 +102,7 @@ const UserList = () => {
           className="border border-gray-300 p-2 rounded w-full"
         />
       </div>
+
 
       {loading ? ( // Show spinner while loading
         <div className="flex justify-center items-center h-40">
@@ -103,7 +131,7 @@ const UserList = () => {
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   }`}
                 >
-                  <td className="py-3 px-3 text-left whitespace-nowrap sticky left-0 z-10">
+                  <td className="py-3 px-3 text-left whitespace-nowrap sticky left-0 z-10 bg-white">
                     <Link
                       to={`/users/${user.id}`}
                       className="text-blue-500 hover:underline"
